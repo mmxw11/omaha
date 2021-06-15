@@ -141,9 +141,9 @@ void JobObserverCOMDecorator::OnComplete(const ObserverCompletionInfo& info) {
     job_observer_ = NULL;
   }
 
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (on_demand_events) {
-    on_demand_events->DoExit();
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (on_demand_events_ptr) {
+    on_demand_events_ptr->DoExit();
     SetEventSink(NULL);
   }
 
@@ -160,8 +160,8 @@ void JobObserverCOMDecorator::SetEventSink(
 // TODO(omaha): Need to add a DoPause() to OnDemandEventsInterface. We never
 // expect these to be used since Chrome never did.
 STDMETHODIMP JobObserverCOMDecorator::DoPause() {
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 
@@ -170,8 +170,8 @@ STDMETHODIMP JobObserverCOMDecorator::DoPause() {
 
 // TODO(omaha): Need to add a DoResume() to OnDemandEventsInterface.
 STDMETHODIMP JobObserverCOMDecorator::DoResume() {
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 
@@ -179,20 +179,20 @@ STDMETHODIMP JobObserverCOMDecorator::DoResume() {
 }
 
 STDMETHODIMP JobObserverCOMDecorator::DoClose() {
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 
-  on_demand_events->DoClose();
+  on_demand_events_ptr->DoClose();
   return S_OK;
 }
 
 // TODO(omaha): Reconcile IJobObserver::DoRestartBrowsers() with
 // OnDemandEventsInterface::DoRestartBrowser().
 STDMETHODIMP JobObserverCOMDecorator::DoRestartBrowsers() {
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 
@@ -200,8 +200,8 @@ STDMETHODIMP JobObserverCOMDecorator::DoRestartBrowsers() {
 }
 
 STDMETHODIMP JobObserverCOMDecorator::DoReboot() {
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 
@@ -210,8 +210,8 @@ STDMETHODIMP JobObserverCOMDecorator::DoReboot() {
 
 STDMETHODIMP JobObserverCOMDecorator::DoLaunchBrowser(const WCHAR* url) {
   UNREFERENCED_PARAMETER(url);
-  OnDemandEventsInterface* on_demand_events(on_demand_events());
-  if (!on_demand_events) {
+  OnDemandEventsInterface* on_demand_events_ptr(on_demand_events());
+  if (!on_demand_events_ptr) {
     return GOOPDATE_E_OBSERVER_PROGRESS_WND_EVENTS_NULL;
   }
 

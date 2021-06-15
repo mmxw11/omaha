@@ -93,17 +93,17 @@ TEST_F(WebServicesClientTest, Send) {
   xml::response::Response response(update_response_->response());
   EXPECT_STREQ(_T("3.0"), response.protocol);
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString cookie;
-  EXPECT_HRESULT_FAILED(network_request->QueryHeadersString(
+  EXPECT_HRESULT_FAILED(network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_FLAG_REQUEST_HEADERS | WINHTTP_QUERY_COOKIE,
       WINHTTP_HEADER_NAME_BY_INDEX,
       &cookie));
   EXPECT_TRUE(cookie.IsEmpty());
 
   CString etag;
-  EXPECT_HRESULT_FAILED(network_request->QueryHeadersString(
+  EXPECT_HRESULT_FAILED(network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_ETAG, WINHTTP_HEADER_NAME_BY_INDEX, &etag));
   EXPECT_TRUE(etag.IsEmpty());
 }
@@ -126,10 +126,10 @@ TEST_P(WebServicesClientTest, SendUsingCup) {
   xml::response::Response response(update_response_->response());
   EXPECT_STREQ(_T("3.0"), response.protocol);
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString no_request_age_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       _T("X-RequestAge"),
       &no_request_age_header);
@@ -137,7 +137,7 @@ TEST_P(WebServicesClientTest, SendUsingCup) {
   EXPECT_STREQ(_T(""), no_request_age_header);
 
   CString interactive_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXInteractive,
       &interactive_header);
@@ -145,7 +145,7 @@ TEST_P(WebServicesClientTest, SendUsingCup) {
   EXPECT_STREQ(GetParam() ? _T("fg") : _T("bg"), interactive_header);
 
   CString app_ids_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXAppId,
       &app_ids_header);
@@ -153,7 +153,7 @@ TEST_P(WebServicesClientTest, SendUsingCup) {
   EXPECT_STREQ(_T(""), app_ids_header);
 
   CString updater_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXUpdater,
       &updater_header);
@@ -203,10 +203,10 @@ TEST_F(WebServicesClientTest, SendForcingHttps) {
                                                      update_response_.get()));
   EXPECT_TRUE(web_service_client_->is_http_success());
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString app_ids_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXAppId,
       &app_ids_header);
@@ -239,10 +239,10 @@ TEST_F(WebServicesClientTest, SendWithCustomHeader) {
   xml::response::Response response(update_response_->response());
   EXPECT_STREQ(_T("3.0"), response.protocol);
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString request_age_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       _T("X-RequestAge"),
       &request_age_header);
@@ -265,17 +265,17 @@ TEST_P(WebServicesClientTest, SendString) {
                                                            response.get()));
   EXPECT_TRUE(web_service_client_->is_http_success());
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString interactive_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXInteractive,
       &interactive_header);
   EXPECT_STREQ(GetParam() ? _T("fg") : _T("bg"), interactive_header);
 
   CString updater_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       kHeaderXUpdater,
       &updater_header);
@@ -304,10 +304,10 @@ TEST_F(WebServicesClientTest, SendStringWithCustomHeader) {
                                                            response.get()));
   EXPECT_TRUE(web_service_client_->is_http_success());
 
-  NetworkRequest* network_request(network_request());
+  NetworkRequest* network_request_ptr(network_request());
 
   CString foobar_header;
-  network_request->QueryHeadersString(
+  network_request_ptr->QueryHeadersString(
       WINHTTP_QUERY_CUSTOM | WINHTTP_QUERY_FLAG_REQUEST_HEADERS,
       _T("X-FooBar"),
       &foobar_header);
